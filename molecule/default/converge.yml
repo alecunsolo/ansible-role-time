@@ -1,6 +1,16 @@
 ---
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: Update apt cache.
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family | lower == "debian"
+    - name: Ensure tzdata package is installed
+      ansible.builtin.package:
+        name: tzdata
+        state: present
   tasks:
     - name: Include time.
       ansible.builtin.include_role:
