@@ -1,0 +1,26 @@
+---
+galaxy_info:
+  author: Alessandro Cunsolo
+  namespace: alecunsolo
+  description: Role to manage timezone and NTP configuration
+  license: MIT
+  role_name: time
+
+  min_ansible_version: '2.8'
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - all
+  - name: Debian
+    versions:
+    - all
+  - name: EL
+    versions:
+    - all
+
+  galaxy_tags:
+  - system
+  - automation
+  - ntp
+dependencies: []
