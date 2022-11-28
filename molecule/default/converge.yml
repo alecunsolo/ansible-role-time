@@ -1,8 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    custom_ntp_server: 10.10.10.10
   pre_tasks:
     - name: Update apt cache.
       ansible.builtin.apt:
