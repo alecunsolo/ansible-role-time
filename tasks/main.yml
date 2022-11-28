@@ -26,10 +26,21 @@
     state: present
     insertafter: EOF
   when: custom_ntp_server
-  notify: Restart chronyd
+  # notify: Restart chronyd
 
 - name: Enable and start chrony.
   ansible.builtin.service:
     name: chronyd
     state: started
     enabled: yes
+  failed_when: false
+
+- name: Get debug info.
+  ansible.builtin.command:
+    cmd: systemctl status chrony.service
+  register: sys_debug
+  changed_when: false
+
+- name: Print debug info.
+  ansible.builtin.debug:
+    var: sys_debug.stdout
