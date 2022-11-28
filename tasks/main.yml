@@ -37,7 +37,7 @@
 
 - name: Get debug info.
   ansible.builtin.command:
-    cmd: systemctl status chrony.service
+    cmd: systemctl status chronyd.service
   register: sys_debug
   changed_when: false
 
