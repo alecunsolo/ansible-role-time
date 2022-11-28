@@ -1,4 +1,35 @@
 ---
-- name: Set timezone to {{ config_timezone }}
+- name: Read distro specific variables.
+  ansible.builtin.include_vars: '{{ ansible_os_family | lower }}.yml'
+
+- name: Configure timezone.
   community.general.timezone:
     name: '{{ config_timezone }}'
+
+- name: Remove other ntp packages.
+  ansible.builtin.package:
+    name:
+    - ntp
+    - systemd-timesyncd
+    state: absent
+
+- name: Install chrony package.
+  ansible.builtin.package:
+    name: chrony
+    state: present
+
+- name: Add custom ntp server.
+  ansible.builtin.lineinfile:
+    path: '{{ chrony_conf_path }}'  # Config path is not the same in all distros
+    regexp: ^server
+    line: server {{ custom_ntp_server }} iburst prefer
+    state: present
+    insertafter: EOF
+  when: custom_ntp_server
+  notify: Restart chronyd
+
+- name: Enable and start chrony.
+  ansible.builtin.service:
+    name: chronyd
+    state: started
+    enabled: yes

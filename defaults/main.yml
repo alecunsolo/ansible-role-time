@@ -1,2 +1,3 @@
 ---
 config_timezone: Etc/UTC
+custom_ntp_server: ~
