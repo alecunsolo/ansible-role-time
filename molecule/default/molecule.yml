@@ -2,6 +2,7 @@
 dependency:
   name: galaxy
   options:
+    timeout: 300  # Galaxy is not very reliable
     requirements-file: requirements.yml
 driver:
   name: docker
