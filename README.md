@@ -1,31 +1,57 @@
 Ansible Role: time
 =========
 
-A brief description of the role goes here.
+A simple role to set timezone and enable NTP (Chrony). Nothing sophisticated and not very configurable, but it'a all I need :)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The package `tzdata` must be installed. I think only containers don't have it already installed by default.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Default values defined in [defaults/main.yml](default/main.yml)
+```yaml
+config_timezone: Etc/UTC
+```
+The wanted timezone.
+
+```yaml
+custom_ntp_server: ~
+```
+If present, configure a preferred ntp server.
+
+The chrony config file path is different for RedHat and Debian, so it is configured in a distro specific variable file:
+
+```yaml
+# Debian
+chrony_conf_path: /etc/chrony/chrony.conf
+# RedHat
+chrony_conf_path: /etc/chrony.conf
+```
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+The role use the `community.general.timezone` module, so the `community.general` collection must be available.
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+- hosts: all
+  vars:
+    config_timezone: Europe/Rome
+    custom_ntp_server: ntp.example.com
+  pre_tasks:
+    - name: Ensure tzdata package is installed.
+      ansible.builtin.package:
+        name: tzdata
+        state: present
+  roles:
+    - alecunsolo.time
+```
 
 License
 -------
