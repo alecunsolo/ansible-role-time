@@ -1,7 +1,7 @@
 Ansible Role: time
 =========
 
-A simple role to set timezone and enable NTP (Chrony). Nothing sophisticated and not very configurable, but it'a all I need :)
+A simple role to set timezone and enable NTP (Chrony). Nothing sophisticated and not very configurable, but it's all I need :)
 
 Requirements
 ------------
@@ -11,7 +11,7 @@ The package `tzdata` must be installed. I think only containers don't have it al
 Role Variables
 --------------
 
-Default values defined in [defaults/main.yml](default/main.yml)
+Default values defined in [defaults/main.yml](defaults/main.yml)
 ```yaml
 config_timezone: Etc/UTC
 ```
