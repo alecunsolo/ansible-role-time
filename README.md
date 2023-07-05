@@ -3,7 +3,10 @@
 
 Ansible Role: time
 =========
+## DISCLAIMER
+After [this](https://www.redhat.com/en/blog/furthering-evolution-centos-stream) announcement I will not test on RHEL anymore.
 
+---------
 A simple role to set timezone and enable NTP (Chrony). Nothing sophisticated and not very configurable, but it's all I need :)
 
 Requirements
